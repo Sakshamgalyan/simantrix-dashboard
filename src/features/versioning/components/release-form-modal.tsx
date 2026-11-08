@@ -147,16 +147,13 @@ const ReleaseForm = ({
       <div className="space-y-2 rounded-xl border border-[var(--gy-border)] bg-[var(--gy-surface-subtle)] p-3">
         <div className="flex items-center justify-between">
           <label className="text-xs font-semibold text-[var(--gy-text)] uppercase tracking-wider">
-            Platform Binary Download Links
+            Platform Binary Download Links (Amazon S3 / Cloud CDN)
           </label>
-          <span className="text-[0.7rem] text-[var(--gy-text-secondary)]">
-            Handled live on simantrix-home/download
-          </span>
         </div>
 
         <Input
           label="Windows Installer (.exe / .msi)"
-          placeholder="https://releases.simantrix.com/desktop/Simantrix-Setup-x64.exe"
+          placeholder="https://simantrix-releases.s3.us-east-1.amazonaws.com/releases/win32/x64/Simantrix-1.0.0-Setup.exe"
           fullWidth
           hasError={Boolean(errors.windowsUrl)}
           error={errors.windowsUrl?.message}
@@ -166,7 +163,7 @@ const ReleaseForm = ({
         <div className="grid gap-2 sm:grid-cols-2">
           <Input
             label="macOS Package (.dmg / .zip)"
-            placeholder="https://releases.simantrix.com/desktop/Simantrix-mac-arm64.dmg"
+            placeholder="https://simantrix-releases.s3.us-east-1.amazonaws.com/releases/darwin/x64/Simantrix-darwin-x64-1.0.0.zip"
             fullWidth
             hasError={Boolean(errors.macUrl)}
             error={errors.macUrl?.message}
@@ -174,8 +171,8 @@ const ReleaseForm = ({
           />
 
           <Input
-            label="Linux Package (.AppImage / .deb)"
-            placeholder="https://releases.simantrix.com/desktop/Simantrix-x86_64.AppImage"
+            label="Linux Package (.deb / .rpm)"
+            placeholder="https://simantrix-releases.s3.us-east-1.amazonaws.com/releases/linux/x64/simantrix_1.0.0_amd64.deb"
             fullWidth
             hasError={Boolean(errors.linuxUrl)}
             error={errors.linuxUrl?.message}
@@ -185,7 +182,7 @@ const ReleaseForm = ({
 
         <Input
           label="Fallback / Store Download Link (Optional)"
-          placeholder="https://releases.simantrix.com/desktop/latest"
+          placeholder="https://simantrix-releases.s3.us-east-1.amazonaws.com/releases/latest.json"
           fullWidth
           hasError={Boolean(errors.downloadUrl)}
           error={errors.downloadUrl?.message}

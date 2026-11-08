@@ -3,9 +3,12 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Button, Chip } from "@galyan/ui";
-import { Laptop, Plus, ShieldCheck } from "lucide-react";
+import { Laptop, Plus, ShieldCheck, ExternalLink } from "lucide-react";
 import { AdminHero } from "@/components/layout/common/hero";
-import { AdminLoadError, AdminPageSkeleton } from "@/components/layout/common/states";
+import {
+  AdminLoadError,
+  AdminPageSkeleton,
+} from "@/components/layout/common/states";
 import { useVersioningContext } from "@/features/versioning/context";
 import { CurrentVersions } from "@/features/versioning/components/current-versions";
 import { ReleasesSection } from "@/features/versioning/components/releases-section";
@@ -28,11 +31,16 @@ const ReleaseActionModal = dynamic(
 );
 
 export const VersioningContent = () => {
-  const { state, summary, canManage, openDialog, refresh } = useVersioningContext();
+  const { state, summary, canManage, openDialog, refresh } =
+    useVersioningContext();
 
   if (!state.loaded) {
     return state.error ? (
-      <AdminLoadError title="Versioning registry unavailable" message={state.error} onRetry={refresh} />
+      <AdminLoadError
+        title="Versioning registry unavailable"
+        message={state.error}
+        onRetry={refresh}
+      />
     ) : (
       <AdminPageSkeleton />
     );
@@ -50,7 +58,11 @@ export const VersioningContent = () => {
         description="Dedicated release management, progressive canary rollouts, update channels, and installer distribution for the Simantrix Desktop App (Electron 43)."
         chips={
           <>
-            <Chip variant="soft" size="sm" icon={<Laptop className="size-3 text-[var(--gy-primary)]" />}>
+            <Chip
+              variant="soft"
+              size="sm"
+              icon={<Laptop className="size-3 text-[var(--gy-primary)]" />}
+            >
               Simantrix Desktop (Electron 43)
             </Chip>
             {stableRelease && (
@@ -69,16 +81,29 @@ export const VersioningContent = () => {
           </>
         }
         actions={
-          canManage && (
+          <div className="flex items-center gap-2">
             <Button
-              variant="primary"
+              as="a"
+              href="https://github.com/Sakshamgalyan/samantrix-app"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
               size="sm"
-              leftIcon={<Plus className="size-3.5" />}
-              onClick={() => openDialog({ kind: "create" })}
+              leftIcon={<ExternalLink className="size-3.5" />}
             >
-              New Desktop Release
+              GitHub Repository
             </Button>
-          )
+            {canManage && (
+              <Button
+                variant="primary"
+                size="sm"
+                leftIcon={<Plus className="size-3.5" />}
+                onClick={() => openDialog({ kind: "create" })}
+              >
+                New Desktop Release
+              </Button>
+            )}
+          </div>
         }
         updatedAt={summary?.generatedAt}
       />

@@ -28,6 +28,7 @@ import {
 import {
   ORG_ADMINS,
   ORG_LEADS,
+  ORG_HR,
   type OrgRole,
   type Permission,
 } from "@/utils/roles";
@@ -219,6 +220,16 @@ export const DASHBOARD_ROUTES: DashboardRoute[] = [
     group: "Directory",
     scope: "workspace",
     orgRoles: ORG_ADMINS,
+  },
+  {
+    path: "organization/people",
+    label: "People & HRMS",
+    description:
+      "Workforce management, attendance tracking, leave requests, and payroll runs.",
+    icon: Users,
+    group: "Directory",
+    scope: "workspace",
+    orgRoles: ORG_HR,
   },
   {
     path: "organization/spaces",

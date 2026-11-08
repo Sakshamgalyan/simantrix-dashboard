@@ -18,7 +18,10 @@ export interface OrgSecurityPoliciesCardProps {
   loading: boolean;
   savingSettings: boolean;
   canEdit: boolean;
-  onFieldChange: <K extends keyof PolicyFormState>(field: K, value: PolicyFormState[K]) => void;
+  onFieldChange: <K extends keyof PolicyFormState>(
+    field: K,
+    value: PolicyFormState[K],
+  ) => void;
   onAddDomain: () => void;
   onRemoveDomain: (domain: string) => void;
   onSubmit: (e: React.FormEvent) => void;
@@ -46,11 +49,21 @@ export const OrgSecurityPoliciesCard = ({
           <ShieldCheck className="size-5" />
         </div>
         <div>
-          <Typography variant="h3" weight="bold" textColor="var(--gy-text)" className="text-base sm:text-lg">
+          <Typography
+            variant="h3"
+            weight="bold"
+            textColor="var(--gy-text)"
+            className="text-base sm:text-lg"
+          >
             Organization security policies
           </Typography>
-          <Typography variant="p" textColor="var(--gy-text-secondary)" className="mt-0.5 text-xs sm:text-sm">
-            Enforce compliance rules, login timeouts, and invitation domain restrictions across all team members.
+          <Typography
+            variant="p"
+            textColor="var(--gy-text-secondary)"
+            className="mt-0.5 text-xs sm:text-sm"
+          >
+            Enforce compliance rules and invitation domain restrictions across
+            all team members.
           </Typography>
         </div>
       </div>
@@ -58,11 +71,6 @@ export const OrgSecurityPoliciesCard = ({
       {loading ? (
         <div className="space-y-4">
           <Skeleton variant="rectangular" height="4.5rem" />
-          <div className="grid gap-4 sm:grid-cols-3">
-            <Skeleton variant="rectangular" height="4rem" />
-            <Skeleton variant="rectangular" height="4rem" />
-            <Skeleton variant="rectangular" height="4rem" />
-          </div>
           <Skeleton variant="rectangular" height="4rem" />
         </div>
       ) : (
@@ -71,55 +79,30 @@ export const OrgSecurityPoliciesCard = ({
             {/* Mandatory 2FA */}
             <div className="flex items-center justify-between gap-4 rounded-xl border border-[var(--gy-border)] bg-[var(--gy-surface-sunken)] p-4">
               <div className="space-y-0.5">
-                <Typography variant="p" weight="semibold" textColor="var(--gy-text)" className="text-sm">
+                <Typography
+                  variant="p"
+                  weight="semibold"
+                  textColor="var(--gy-text)"
+                  className="text-sm"
+                >
                   Require two-factor auth for all members
                 </Typography>
-                <Typography variant="p" textColor="var(--gy-text-secondary)" className="text-xs">
-                  When enabled, members without 2FA will be required to set up an authenticator on their next login.
+                <Typography
+                  variant="p"
+                  textColor="var(--gy-text-secondary)"
+                  className="text-xs"
+                >
+                  When enabled, members without 2FA will be required to set up
+                  an authenticator on their next login.
                 </Typography>
               </div>
               <Toggle
                 checked={policyForm.requireTwoFactor}
                 isDisabled={!canEdit}
                 aria-label="Require two-factor auth for all members"
-                onChange={(e) => onFieldChange("requireTwoFactor", e.target.checked)}
-              />
-            </div>
-
-            {/* Inputs Grid */}
-            <div className="grid gap-4 sm:grid-cols-3">
-              <Input
-                type="number"
-                label="Session timeout (minutes)"
-                min={15}
-                max={1440}
-                fullWidth
-                size="sm"
-                value={policyForm.sessionTimeoutMinutes}
-                disabled={!canEdit}
-                onChange={(e) => onFieldChange("sessionTimeoutMinutes", Number(e.target.value))}
-              />
-              <Input
-                type="number"
-                label="Minimum password length"
-                min={8}
-                max={64}
-                fullWidth
-                size="sm"
-                value={policyForm.passwordMinLength}
-                disabled={!canEdit}
-                onChange={(e) => onFieldChange("passwordMinLength", Number(e.target.value))}
-              />
-              <Input
-                type="number"
-                label="Password rotation (days)"
-                min={0}
-                max={365}
-                fullWidth
-                size="sm"
-                value={policyForm.passwordExpiresDays}
-                disabled={!canEdit}
-                onChange={(e) => onFieldChange("passwordExpiresDays", Number(e.target.value))}
+                onChange={(e) =>
+                  onFieldChange("requireTwoFactor", e.target.checked)
+                }
               />
             </div>
 
@@ -159,8 +142,13 @@ export const OrgSecurityPoliciesCard = ({
 
               <div className="flex flex-wrap gap-2 pt-1">
                 {policyForm.allowedEmailDomains.length === 0 ? (
-                  <Typography variant="span" textColor="var(--gy-text-subtle)" className="text-xs">
-                    No domain restrictions enforced (any email domain can be invited).
+                  <Typography
+                    variant="span"
+                    textColor="var(--gy-text-subtle)"
+                    className="text-xs"
+                  >
+                    No domain restrictions enforced (any email domain can be
+                    invited).
                   </Typography>
                 ) : (
                   policyForm.allowedEmailDomains.map((dom) => (

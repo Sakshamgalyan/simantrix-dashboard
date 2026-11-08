@@ -22,12 +22,18 @@ export interface ApiQueryError {
  * Runs requests through the shared axios client, so token refresh, the device header and
  * the `{ success, data }` envelope unwrapping stay in one place (`@/lib/api`).
  */
-const axiosBaseQuery: BaseQueryFn<ApiQueryArgs | string, unknown, ApiQueryError> = async (
-  args,
-  { signal },
-) => {
-  const { url, method = "GET", body, params, responseType } =
-    typeof args === "string" ? ({ url: args } as ApiQueryArgs) : args;
+const axiosBaseQuery: BaseQueryFn<
+  ApiQueryArgs | string,
+  unknown,
+  ApiQueryError
+> = async (args, { signal }) => {
+  const {
+    url,
+    method = "GET",
+    body,
+    params,
+    responseType,
+  } = typeof args === "string" ? ({ url: args } as ApiQueryArgs) : args;
   try {
     // The response interceptor already returns the unwrapped payload
     const data = await apiClient.request<unknown, unknown>({
@@ -41,9 +47,13 @@ const axiosBaseQuery: BaseQueryFn<ApiQueryArgs | string, unknown, ApiQueryError>
     return { data };
   } catch (err) {
     if (err instanceof ApiError) {
-      return { error: { status: err.statusCode, message: err.message, data: err.data } };
+      return {
+        error: { status: err.statusCode, message: err.message, data: err.data },
+      };
     }
-    return { error: { status: 0, message: "Something went wrong. Please try again." } };
+    return {
+      error: { status: 0, message: "Something went wrong. Please try again." },
+    };
   }
 };
 
@@ -99,6 +109,7 @@ export const dashboardApi = createApi({
     "Ecosystem",
     "RealtimeGateway",
     "Queues",
+    "Hrms",
   ],
   // Revisiting a page within 30s reuses the cached data; older data is shown while it refreshes
   refetchOnMountOrArgChange: 30,
